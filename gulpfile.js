@@ -18,7 +18,7 @@ gulp.task('browserSync', function () {
 });
 
 gulp.task('js', function () {
-  return gulp.src([source + 'js/module/**/*.js', source + 'js/extras/**/*.js'])
+  return gulp.src([source + 'js/modules/**/*.js', source + 'js/extras/**/*.js'])
     .pipe(concat('main.js'))
     // .pipe(uglify())
     .pipe(gulp.dest(build + 'js'));
