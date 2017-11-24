@@ -1,0 +1,12 @@
+input[type=text] {
+    border: 2px solid $color-theme;
+    background: none;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 3px;
+
+    &:focus {
+      outline: none;
+      border: 2px solid $color-theme-highlight;
+    }
+}

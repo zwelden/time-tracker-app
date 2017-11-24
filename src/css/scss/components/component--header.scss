@@ -1,0 +1,25 @@
+.header {
+    background: darken($color-card-bg, 3%);
+    padding: 10px;
+    box-shadow: 0 2px 4px $gray-light;
+    margin-bottom: 2em;
+
+    h1 {
+        position: relative;
+        margin: 0;
+        padding: 10px 0;
+        text-align: center;
+        color: $black-lightest;
+
+        &:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 80px;
+            height: 5px;
+            transform: translateX(-50%);
+            background: $color-theme;
+        }
+    }
+}

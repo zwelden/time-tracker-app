@@ -1,0 +1,154 @@
+.c-tracker-card {
+    margin-bottom: 1em;
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 0 10px;
+    width: 100%;
+
+    @media only screen and (min-width: 768px) {
+        width: 50%;
+    }
+
+    @media only screen and (min-width: 900px) {
+        width: 33.33%;
+    }
+}
+
+.c-tracker-card__inner {
+    position: relative;
+    padding: 10px;
+    background: $color-card-bg;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px $gray-light;
+
+    .tracker-info,
+    .tracker-clock-wrapper {
+        display: block;
+        text-align: center;
+    }
+
+    .tracker-info {
+        .tracker-info__title {
+            position: relative;
+            margin: 0;
+            color: $color-theme;
+            padding-bottom: 10px;
+
+            &:after {
+              content: "";
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              width: 50px;
+              height: 2px;
+              background: $gray-dark;
+              transform: translateX(-50%);
+            }
+        }
+    }
+
+    .tracker-clock-wrapper {
+        //position: relative;
+    }
+
+    .tracker-controls {
+        display: inline-block;
+        margin-left: .5em;
+    }
+
+    .tracker-clock {
+        display: block;
+        background: $white;
+        padding: 10px 15px 7px;
+        border-radius: 3px;
+        //border: 1px solid $gray-light;
+        font-size: 1.5em;
+        line-height: 1;
+        margin: 0;
+    }
+
+    .tracker-controls {
+        button[name=startStop] {
+            position: absolute;
+            bottom: 7px;
+            left: 50%;
+            padding: 0;
+            border: none;
+            background: $black-lightest;
+            margin: 0;
+            transition: transform .2s;
+            color: $white;
+            line-height: 33px;
+            width: 33px;
+            text-align: center;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+
+            i {
+              position: relative;
+              left: 1px;
+            }
+
+            &:hover {
+                color: $white;
+                background: $color-theme-highlight;
+            }
+
+            &.tracking-active {
+                i {
+                    left: 0px;
+                }
+            }
+        }
+    }
+
+    .card-actions {
+        position: relative;
+        height: 2em;
+    }
+
+    .tracker-delete {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: inline-block;
+
+        button.btn-warning {
+            border: none;
+            background: none;
+            margin-bottom: 0;
+            transition: transform .2s;
+            padding: 0;
+            color: $color-warning-highlight;
+            font-size: 1.5em;
+
+            &:hover {
+                color: $color-warning;
+            }
+        }
+    }
+
+    .tracker-edit {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        display: inline-block;
+
+        button[name=editCard] {
+            position: relative;
+            top: 2px;
+            background: none;
+            border: none;
+            color: $black-light;
+            padding: 0;
+            margin-bottom: 0;
+            font-size: 1.5em;
+
+            &:hover {
+                background: none;
+                color: $color-theme-highlight;
+            }
+        }
+    }
+}

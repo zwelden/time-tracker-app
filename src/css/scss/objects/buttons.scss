@@ -1,0 +1,36 @@
+button,
+.button {
+    border: 2px solid $color-theme;
+    padding: 10px 15px;
+    font-size: 1em;
+    background: $color-theme;
+    color: $white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 3px;
+    margin: .5em 0;
+
+    &:focus,
+    &:hover {
+        outline: none;
+        border-color: $color-theme-highlight;
+        background: $color-theme-highlight;
+        color: #fff;
+    }
+}
+
+.btn-small {
+    padding: 5px 10px;
+    font-size: .85em;
+}
+
+.btn-warning {
+    border-color: $color-warning;
+    color: $color-warning;
+
+    &:hover {
+        border-color: $color-warning-highlight;
+        background: $color-warning-highlight;
+        color: $white;
+    }
+}

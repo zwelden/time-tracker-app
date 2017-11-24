@@ -4,17 +4,24 @@
     <meta charset="utf-8">
     <title>Time Tracker App</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
-    <h1>Time Tracker</h1>
-    <div class="time-counter">
-      <h2 class="time-counter-h2">0:00:00</h2>
-    </div>
-    <div class="time-controls">
-      <button type="button" name="startTime">Start</button>
-      <button type="button" name="stopTime">Stop</button>
-    </div>
+    <!-- <div class="header">
+      <h1>Time Tracker</h1>
+    </div> -->
+    <div class="main-content">
+      <div class="add-tracker">
+        <div class="add-tracker__title">
+          <h1>Time Tracker</h1>
+        </div>
+        <input type="text" name="trackerTitle" value="" placeholder="Enter Tracker Title">
+        <input class="button" type="submit" name="addTracker" value="Add Tracker">
+      </div>
+      <div class="tracker-card-container">
 
+      </div>
+    </div>
     <script type="text/javascript" src="js/main.js"></script>
   </body>
 </html>

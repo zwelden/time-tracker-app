@@ -1,0 +1,209 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 16px;
+  background: #fff; }
+
+.main-content {
+  max-width: 900px;
+  width: 90%;
+  margin: auto;
+  margin-top: 1em; }
+
+input[type=text] {
+  border: 2px solid #45b39d;
+  background: none;
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 3px; }
+  input[type=text]:focus {
+    outline: none;
+    border: 2px solid #16A085; }
+
+button,
+.button {
+  border: 2px solid #45b39d;
+  padding: 10px 15px;
+  font-size: 1em;
+  background: #45b39d;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 3px;
+  margin: .5em 0; }
+  button:focus, button:hover,
+  .button:focus,
+  .button:hover {
+    outline: none;
+    border-color: #16A085;
+    background: #16A085;
+    color: #fff; }
+
+.btn-small {
+  padding: 5px 10px;
+  font-size: .85em; }
+
+.btn-warning {
+  border-color: #CD6155;
+  color: #CD6155; }
+  .btn-warning:hover {
+    border-color: #7B241C;
+    background: #7B241C;
+    color: #fff; }
+
+.header {
+  background: #ecefef;
+  padding: 10px;
+  box-shadow: 0 2px 4px #bbb;
+  margin-bottom: 2em; }
+  .header h1 {
+    position: relative;
+    margin: 0;
+    padding: 10px 0;
+    text-align: center;
+    color: #555; }
+    .header h1:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 80px;
+      height: 5px;
+      transform: translateX(-50%);
+      background: #45b39d; }
+
+.add-tracker {
+  margin-bottom: 2em;
+  text-align: center;
+  background: #45b39d;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px #999;
+  padding: 10px; }
+  .add-tracker h1 {
+    color: #fff;
+    margin: .5rem 0;
+    line-height: 1; }
+  .add-tracker input[type=text] {
+    border: none;
+    border-radius: 3px;
+    background: #fff;
+    margin: 0 0 .5rem 0; }
+    .add-tracker input[type=text]:focus {
+      box-shadow: inset 0 0 5px #20d8b3; }
+  .add-tracker input[name=addTracker] {
+    border: none;
+    background: #a2d9ce;
+    color: #fff;
+    margin: 0 0 .5em 0; }
+    .add-tracker input[name=addTracker]:hover {
+      background: #138a72;
+      color: #fff; }
+
+.c-tracker-card {
+  margin-bottom: 1em;
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 0 10px;
+  width: 100%; }
+  @media only screen and (min-width: 768px) {
+    .c-tracker-card {
+      width: 50%; } }
+  @media only screen and (min-width: 900px) {
+    .c-tracker-card {
+      width: 33.33%; } }
+
+.c-tracker-card__inner {
+  position: relative;
+  padding: 10px;
+  background: #F4F6F6;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px #bbb; }
+  .c-tracker-card__inner .tracker-info,
+  .c-tracker-card__inner .tracker-clock-wrapper {
+    display: block;
+    text-align: center; }
+  .c-tracker-card__inner .tracker-info .tracker-info__title {
+    position: relative;
+    margin: 0;
+    color: #45b39d;
+    padding-bottom: 10px; }
+    .c-tracker-card__inner .tracker-info .tracker-info__title:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 50px;
+      height: 2px;
+      background: #777;
+      transform: translateX(-50%); }
+  .c-tracker-card__inner .tracker-controls {
+    display: inline-block;
+    margin-left: .5em; }
+  .c-tracker-card__inner .tracker-clock {
+    display: block;
+    background: #fff;
+    padding: 10px 15px 7px;
+    border-radius: 3px;
+    font-size: 1.5em;
+    line-height: 1;
+    margin: 0; }
+  .c-tracker-card__inner .tracker-controls button[name=startStop] {
+    position: absolute;
+    bottom: 7px;
+    left: 50%;
+    padding: 0;
+    border: none;
+    background: #555;
+    margin: 0;
+    transition: transform .2s;
+    color: #fff;
+    line-height: 33px;
+    width: 33px;
+    text-align: center;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    z-index: 5; }
+    .c-tracker-card__inner .tracker-controls button[name=startStop] i {
+      position: relative;
+      left: 1px; }
+    .c-tracker-card__inner .tracker-controls button[name=startStop]:hover {
+      color: #fff;
+      background: #16A085; }
+    .c-tracker-card__inner .tracker-controls button[name=startStop].tracking-active i {
+      left: 0px; }
+  .c-tracker-card__inner .card-actions {
+    position: relative;
+    height: 2em; }
+  .c-tracker-card__inner .tracker-delete {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: inline-block; }
+    .c-tracker-card__inner .tracker-delete button.btn-warning {
+      border: none;
+      background: none;
+      margin-bottom: 0;
+      transition: transform .2s;
+      padding: 0;
+      color: #7B241C;
+      font-size: 1.5em; }
+      .c-tracker-card__inner .tracker-delete button.btn-warning:hover {
+        color: #CD6155; }
+  .c-tracker-card__inner .tracker-edit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: inline-block; }
+    .c-tracker-card__inner .tracker-edit button[name=editCard] {
+      position: relative;
+      top: 2px;
+      background: none;
+      border: none;
+      color: #222;
+      padding: 0;
+      margin-bottom: 0;
+      font-size: 1.5em; }
+      .c-tracker-card__inner .tracker-edit button[name=editCard]:hover {
+        background: none;
+        color: #16A085; }
