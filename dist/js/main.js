@@ -1,3 +1,28 @@
+(function (app, window, document) {
+  var EventBus = {
+    topics: {},
+
+    subscribe: function (topic, listener) {
+      // create the topic if not yet created
+      if (!this.topics[topic]) this.topics[topic] = [];
+
+      // add the listener
+      this.topics[topic].push(listener);
+    },
+
+    publish: function (topic, data) {
+      // return if the topic doesn't exist, or there are no listeners
+      if (!this.topics[topic] || this.topics[topic].length < 1) return;
+
+      // send the event to all listeners
+      this.topics[topic].forEach(function (listener) {
+        listener(data || {});
+      });
+    }
+  };
+  app.EventBus = EventBus;
+})(window.app = window.app || {}, window, document);
+
 (function (app) {
   var timeTracker = function () {
     var time;
@@ -150,6 +175,11 @@
     this.trackerCard.classList.add('c-tracker-card');
     this.trackerCard.dataset['index'] = this.index;
     this.trackerCard.innerHTML = this.cardInner();
+
+    this.appendCard();
+    this.cacheQueries();
+    this.activateTimer();
+    this.activateEventListeners();
   };
 
   TrackerCard.prototype.appendCard = function () {
@@ -213,6 +243,92 @@
   // card.activateEventListener();
 })(window.app = window.app || {});
 
+(function (app, window, document) {
+  var cardManager = (function () {
+    var storageVariable = 'timerCardList';
+    var cardList = [];
+
+    var getCardList = function () {
+      var localStorageStr = window.localStorage.getItem(storageVariable);
+      if (localStorageStr) {
+        cardList = JSON.parse(localStorageStr);
+      }
+      return cardList;
+    };
+
+    var saveCardList = function () {
+      var cardListStr = JSON.stringify(cardList);
+      window.localStorage.setItem(storageVariable, cardListStr);
+    };
+
+    var addCard = function (cardObj) {
+      cardList.push(cardObj);
+      saveCardList();
+    };
+
+    var removeCard = function (index) {
+      cardList.splice(index, 1);
+      saveCardList();
+    };
+
+    var updateCard = function (index, cardObj) {
+      cardList[index] = cardObj;
+      saveCardList();
+    };
+
+    return {
+      getCardList: getCardList,
+      saveCardList: saveCardList,
+      addCard: addCard,
+      removeCard: removeCard,
+      updateCard: updateCard
+    };
+  })();
+  app.cardManager = cardManager;
+})(window.app = window.app || {}, window, document);
+
+(function (app, window, document) {
+  var trackerCreator = (function () {
+    var trackerBtnQuery = 'input[name="addTracker"]';
+    var trackerInputQuery = 'input[name="trackerTitle"]';
+    var addTrackerBtn;
+    var trackerInput;
+
+    var cacheQueries = function () {
+      addTrackerBtn = document.querySelector(trackerBtnQuery);
+      trackerInput = document.querySelector(trackerInputQuery);
+    };
+
+    var activateTrackerCreator = function () {
+      cacheQueries();
+      addTrackerBtn.addEventListener('click', function () {
+        var trackerTitle = trackerInput.value;
+        if (trackerTitle !== '') {
+          clearInput();
+          publishNewCard(trackerTitle);
+        } else {
+          alertError();
+        }
+      });
+    };
+
+    var clearInput = function () {
+      trackerInput.value = '';
+    };
+
+    var alertError = function () {
+      window.alert('Please Enter A Title');
+    };
+
+    var publishNewCard = function (trackerTitle) {
+      app.EventBus.publish('newCardCreated', trackerTitle);
+    };
+
+    return {activateTrackerCreator: activateTrackerCreator};
+  })();
+  app.trackerCreator = trackerCreator;
+})(window.app = window.app || {}, window, document);
+
 (function (app) {
   var addTrackerBtn = document.querySelector('input[name=addTracker]');
   var trackerContainer = document.querySelector('.tracker-card-container');
@@ -223,18 +339,19 @@
     var trackerInput = document.querySelector('input[name="trackerTitle"]');
     var trackerTitle = trackerInput.value;
     if (trackerTitle !== '') {
-      trackerInput.value = '';
+      //trackerInput.value = '';
 
       var card = new app.TrackerCard(trackerTitle, index, trackerContainer);
       card.createCard();
-      card.appendCard();
-      card.cacheQueries();
-      card.activateTimer();
-      card.activateEventListeners();
 
       index++;
     } else {
       window.alert('Please Enter A Title');
     }
+  });
+  app.trackerCreator.activateTrackerCreator();
+  app.EventBus.subscribe('newCardCreated', function (trackerTitle) {
+    console.log(trackerTitle);
+    console.log('pubsubed');
   });
 })(window.app = window.app || {});

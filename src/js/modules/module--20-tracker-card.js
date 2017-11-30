@@ -39,6 +39,11 @@
     this.trackerCard.classList.add('c-tracker-card');
     this.trackerCard.dataset['index'] = this.index;
     this.trackerCard.innerHTML = this.cardInner();
+
+    this.appendCard();
+    this.cacheQueries();
+    this.activateTimer();
+    this.activateEventListeners();
   };
 
   TrackerCard.prototype.appendCard = function () {
