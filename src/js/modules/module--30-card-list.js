@@ -1,37 +1,41 @@
 (function (app, window, document) {
-  var cardManager = (function () {
+  var cardList = (function () {
     var storageVariable = 'timerCardList';
-    var cardList = [];
+    var cardListArr = [];
 
-    var getCardList = function () {
+    var loadCardList = function () {
       var localStorageStr = window.localStorage.getItem(storageVariable);
-      if (localStorageStr) {
-        cardList = JSON.parse(localStorageStr);
+      if (localStorageStr !== null) {
+        cardListArr = JSON.parse(localStorageStr);
       }
-      return cardList;
     };
 
     var saveCardList = function () {
-      var cardListStr = JSON.stringify(cardList);
+      var cardListStr = JSON.stringify(cardListArr);
       window.localStorage.setItem(storageVariable, cardListStr);
     };
 
+    var getCardList = function () {
+      return cardListArr;
+    };
+
     var addCard = function (cardObj) {
-      cardList.push(cardObj);
+      cardListArr.push(cardObj);
       saveCardList();
     };
 
     var removeCard = function (index) {
-      cardList.splice(index, 1);
+      cardListArr.splice(index, 1);
       saveCardList();
     };
 
     var updateCard = function (index, cardObj) {
-      cardList[index] = cardObj;
+      cardListArr[index] = cardObj;
       saveCardList();
     };
 
     return {
+      loadCardList: loadCardList,
       getCardList: getCardList,
       saveCardList: saveCardList,
       addCard: addCard,
@@ -39,5 +43,5 @@
       updateCard: updateCard
     };
   })();
-  app.cardManager = cardManager;
+  app.cardList = cardList;
 })(window.app = window.app || {}, window, document);

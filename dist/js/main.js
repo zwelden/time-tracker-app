@@ -225,9 +225,10 @@
     });
     this.deleteCardBtn.addEventListener('click', function () {
       var index = _this.trackerCard.dataset['index'];
-      var parent = _this.container;
-      var element = parent.querySelector('[data-index="' + index + '"]');
-      parent.removeChild(element);
+      // var parent = _this.container;
+      // var element = parent.querySelector('[data-index="' + index + '"]');
+      // parent.removeChild(element);
+      app.EventBus.publish('removeTrackerCard', index);
     });
   };
 
@@ -244,39 +245,43 @@
 })(window.app = window.app || {});
 
 (function (app, window, document) {
-  var cardManager = (function () {
+  var cardList = (function () {
     var storageVariable = 'timerCardList';
-    var cardList = [];
+    var cardListArr = [];
 
-    var getCardList = function () {
+    var loadCardList = function () {
       var localStorageStr = window.localStorage.getItem(storageVariable);
-      if (localStorageStr) {
-        cardList = JSON.parse(localStorageStr);
+      if (localStorageStr !== null) {
+        cardListArr = JSON.parse(localStorageStr);
       }
-      return cardList;
     };
 
     var saveCardList = function () {
-      var cardListStr = JSON.stringify(cardList);
+      var cardListStr = JSON.stringify(cardListArr);
       window.localStorage.setItem(storageVariable, cardListStr);
     };
 
+    var getCardList = function () {
+      return cardListArr;
+    };
+
     var addCard = function (cardObj) {
-      cardList.push(cardObj);
+      cardListArr.push(cardObj);
       saveCardList();
     };
 
     var removeCard = function (index) {
-      cardList.splice(index, 1);
+      cardListArr.splice(index, 1);
       saveCardList();
     };
 
     var updateCard = function (index, cardObj) {
-      cardList[index] = cardObj;
+      cardListArr[index] = cardObj;
       saveCardList();
     };
 
     return {
+      loadCardList: loadCardList,
       getCardList: getCardList,
       saveCardList: saveCardList,
       addCard: addCard,
@@ -284,7 +289,7 @@
       updateCard: updateCard
     };
   })();
-  app.cardManager = cardManager;
+  app.cardList = cardList;
 })(window.app = window.app || {}, window, document);
 
 (function (app, window, document) {
@@ -330,28 +335,31 @@
 })(window.app = window.app || {}, window, document);
 
 (function (app) {
-  var addTrackerBtn = document.querySelector('input[name=addTracker]');
   var trackerContainer = document.querySelector('.tracker-card-container');
 
-  var trackerList = [];
-  var index = 0;
-  addTrackerBtn.addEventListener('click', function () {
-    var trackerInput = document.querySelector('input[name="trackerTitle"]');
-    var trackerTitle = trackerInput.value;
-    if (trackerTitle !== '') {
-      //trackerInput.value = '';
-
-      var card = new app.TrackerCard(trackerTitle, index, trackerContainer);
-      card.createCard();
-
-      index++;
-    } else {
-      window.alert('Please Enter A Title');
+  var renderCards = function (cardListArr) {
+    trackerContainer.innerHTML = '';
+    if (cardListArr.length > 0) {
+      for (var i = 0; i < cardListArr.length; i++) {
+        var title = cardListArr[i].title;
+        var card = new app.TrackerCard(title, i, trackerContainer);
+        card.createCard();
+      }
     }
-  });
+  };
+
   app.trackerCreator.activateTrackerCreator();
+
   app.EventBus.subscribe('newCardCreated', function (trackerTitle) {
-    console.log(trackerTitle);
-    console.log('pubsubed');
+    app.cardList.addCard({title: trackerTitle});
+    renderCards(app.cardList.getCardList());
   });
+
+  app.EventBus.subscribe('removeTrackerCard', function (index) {
+    app.cardList.removeCard(index);
+    renderCards(app.cardList.getCardList());
+  });
+
+  app.cardList.loadCardList();
+  renderCards(app.cardList.getCardList());
 })(window.app = window.app || {});

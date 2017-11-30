@@ -89,9 +89,10 @@
     });
     this.deleteCardBtn.addEventListener('click', function () {
       var index = _this.trackerCard.dataset['index'];
-      var parent = _this.container;
-      var element = parent.querySelector('[data-index="' + index + '"]');
-      parent.removeChild(element);
+      // var parent = _this.container;
+      // var element = parent.querySelector('[data-index="' + index + '"]');
+      // parent.removeChild(element);
+      app.EventBus.publish('removeTrackerCard', index);
     });
   };
 
